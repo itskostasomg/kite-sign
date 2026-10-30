@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PIP.EXE</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* One screen: a CRT-black void with the game canvas centered, touch pad below on phones. */
+:root {
+  --void: #07050a;
+  --ink: #e9e4f0;
+  --dim: #6d6578;
+  --blood: #c81e3a;
+  --pad: #16111c;
+  --pad-edge: #3a2f45;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--ink);
+  font: 12px/1.4 var(--mono);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 8px;
+  gap: 8px;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+#wrap {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#screen {
+  display: block;
+  background: #000;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  outline: none;
+  cursor: none;
+}
+#screen:focus-visible { box-shadow: 0 0 0 2px var(--dim); }
+#hint { margin: 0; color: var(--dim); text-align: center; letter-spacing: 0.04em; }
+#touch { display: none; width: 100%; max-width: 640px; justify-content: space-between; gap: 16px; }
+.touch-on #touch { display: flex; }
+.touch-on #hint { display: none; }
+.pad { display: flex; gap: 10px; align-items: center; }
+.pad button {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  border: 2px solid var(--pad-edge);
+  background: var(--pad);
+  color: var(--ink);
+  font: 700 18px var(--mono);
+  touch-action: none;
+}
+.pad button.on { background: var(--pad-edge); border-color: var(--blood); }
+@media (prefers-reduced-motion: reduce) { .pad button { transition: none; } }
+</style>
+</head>
+<body>
+<div id="wrap"><canvas id="screen" width="320" height="180" tabindex="0" aria-label="PIP.EXE game screen"></canvas></div>
+<div id="touch" aria-hidden="true">
+  <div class="pad">
+    <button data-k="left" aria-label="Left">&#9664;</button>
+    <button data-k="down" aria-label="Play dead">&#9660;</button>
+    <button data-k="right" aria-label="Right">&#9654;</button>
+  </div>
+  <div class="pad">
+    <button data-k="act" aria-label="Action">X</button>
+    <button data-k="jump" aria-label="Jump">Z</button>
+  </div>
+</div>
+<p id="hint">ARROWS/WASD move &middot; Z/SPACE jump &middot; X read/use &middot; hold DOWN to play dead &middot; ENTER start &middot; M mute</p>
+<noscript><p>PIP.EXE needs JavaScript to run.</p></noscript>
+<script src="js/engine.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/art.js"></script>
+<script src="js/world.js"></script>
+<script src="js/entities.js"></script>
+<script src="js/stages.js"></script>
+<script src="js/play.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
